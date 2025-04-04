@@ -139,7 +139,7 @@ export default function Card({ title, children, className = '' }: CardProps) {
 
 const SandpackTabs = () => {
   const { sandpack } = useSandpack();
-  const [activeTab, setActiveTab] = useState<'preview' | 'console'>('preview');
+  const [activeTab, setActiveTab] = useState<'preview'>('preview');
 
   return (
     <div className='flex flex-col h-full'>
@@ -154,7 +154,7 @@ const SandpackTabs = () => {
         >
           Preview
         </button>
-        <button
+        {/* <button
           className={`px-4 py-2 text-sm font-medium ${
             activeTab === 'console'
               ? 'border-b-2 border-white text-white'
@@ -163,7 +163,7 @@ const SandpackTabs = () => {
           onClick={() => setActiveTab('console')}
         >
           Console
-        </button>
+        </button> */}
       </div>
       <div className='flex-1 overflow-auto bg-white'>
         {activeTab === 'preview' ? (
