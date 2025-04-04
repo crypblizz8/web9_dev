@@ -25,6 +25,7 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({
           model: 'anthropic/claude-3.5-sonnet',
+          // stream: true,
           messages: [
             {
               role: 'system',

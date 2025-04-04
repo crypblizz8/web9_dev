@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 
 // Use dynamic import to avoid SSR issues with Sandpack
 const TabsTopSandpackPreview = dynamic(
-  () => import('@/components/sandpack/TabsTopSandpackPreview'),
+  () => import('../components/sandpack/TabsTopSandpackPreview'),
   { ssr: false }
 );
 
