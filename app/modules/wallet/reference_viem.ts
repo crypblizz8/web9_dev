@@ -2,7 +2,7 @@ export const DEFAULT_VIEM_WALLET = {
   'components/WalletConnect.tsx': `
               import React, { useState, useEffect } from 'react';
               import { createWalletClient, custom } from 'viem';
-              import { mainnet } from 'viem/chains';
+              import { baseSepolia } from 'viem/chains';
 
               type WalletState = {
                 address: string | null;
@@ -102,7 +102,7 @@ export const DEFAULT_VIEM_WALLET = {
 
                   try {
                     const client = createWalletClient({
-                      chain: mainnet,
+                      chain: baseSepolia,
                       transport: custom(window.ethereum),
                     });
 
@@ -163,196 +163,7 @@ export const DEFAULT_VIEM_WALLET = {
                   </div>
                 );
               }
-          `,
-  // const ConnectButton = () => {
-  //   // Add client-side only rendering protection
-  //   const [mounted, setMounted] = useState(false);
-  //   const [buttonState, setButtonState] = useState({
-  //     address: '',
-  //     isConnected: false
-  //   });
-
-  //   useEffect(() => {
-  //     // Only import and use the hooks on the client side
-  //     const initializeWallet = async () => {
-  //       try {
-  //         // Dynamic import of the wallet functionality
-  //         const { useAppKit, useAppKitAccount } = await import('@reown/appkit/react');
-
-  //         // Create a custom hook function to access wallet state
-  //         const getWalletState = () => {
-  //           const { open } = useAppKit();
-  //           const { address, isConnected } = useAppKitAccount();
-
-  //           setButtonState({
-  //             address,
-  //             isConnected
-  //           });
-
-  //           // Set up click handler
-  //           window.handleWalletClick = () => {
-  //             if (!isConnected) {
-  //               open();
-  //             } else {
-  //               open({ view: 'Account' });
-  //             }
-  //           };
-  //         };
-
-  //         // Initialize the wallet connection
-  //         getWalletState();
-  //         setMounted(true);
-  //       } catch (err) {
-  //         console.error("Failed to initialize wallet:", err);
-  //         setMounted(true); // Still mark as mounted so we show the fallback button
-  //       }
-  //     };
-
-  //     initializeWallet();
-  //   }, []);
-
-  //   const formatAddress = (addr: string | undefined) => {
-  //     if (!addr) return '';
-  //     return \`\${addr.slice(0, 6)}...\${addr.slice(-4)}\`;
-  //   };
-
-  //   // Server-side or initial render
-  //   if (!mounted) {
-  //     return (
-  //       <button
-  //         className='px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors'
-  //         disabled
-  //       >
-  //         Loading...
-  //       </button>
-  //     );
-  //   }
-
-  //   // Client-side render after hooks are initialized
-  //   return (
-  //     <button
-  //       onClick={() => window.handleWalletClick?.()}
-  //       className='px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors'
-  //     >
-  //       {buttonState.isConnected ? formatAddress(buttonState.address) : 'Connect'}
-  //     </button>
-  //   );
-  // };
-
-  // // Add necessary type for the window object
-  // declare global {
-  //   interface Window {
-  //     handleWalletClick?: () => void;
-  //   }
-  // }
-
-  // export default ConnectButton;
-  // `,
-  'components/Header.tsx': `
-        import ConnectButton from './ConnectButton';
-  
-        export const Header = () => {
-            return (
-            <header className='px-5 py-4 flex justify-between items-center border-b border-gray-200'>
-                <div className='flex items-center space-x-3'>
-                <h1 className='text-2xl font-bold'>dApp</h1>
-                </div>
-                <ConnectButton />
-            </header>
-            );
-        };`,
-  //   'config/index.ts': `import { cookieStorage, createStorage } from 'wagmi';
-  //         import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
-  //         import { base, baseSepolia } from '@reown/appkit/networks';
-  //         import type { AppKitNetwork } from '@reown/appkit/networks';
-
-  //         // Environment variables
-  //         export const projectId = "55f0a883b25ede7b5f3a96399168e93f" || '';
-
-  //         if (!projectId) {
-  //             throw new Error('Project ID is not defined');
-  //         }
-
-  //         // Define networks - just Base and Base Sepolia
-  //         export const networks = [base, baseSepolia] as [
-  //             AppKitNetwork,
-  //             ...AppKitNetwork[]
-  //         ];
-
-  //         // Select the appropriate network based on environment variables
-  //         const selectedNetwork = process.env.NEXT_PUBLIC_CHAIN_ID
-  //             ? networks.find(
-  //                 (network) => network.id === Number(process.env.NEXT_PUBLIC_CHAIN_ID)
-  //             )
-  //             : baseSepolia; // Default to base if not specified
-
-  //         // Create the adapter with the appropriate networks
-  //         export const wagmiAdapter = new WagmiAdapter({
-  //             storage: createStorage({
-  //             storage: cookieStorage,
-  //             }),
-  //             ssr: true,
-  //             projectId,
-  //             networks: [selectedNetwork] as [AppKitNetwork, ...AppKitNetwork[]],
-  //         });
-
-  //         export const config = wagmiAdapter.wagmiConfig;
-  //         `,
-  //   'context/index.tsx': `
-  //       'use client';
-
-  //         import { wagmiAdapter, networks } from '../config';
-  //         import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-  //         import { createAppKit } from '@reown/appkit/react';
-  //         import React, { type ReactNode } from 'react';
-  //         import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi';
-
-  //         const queryClient = new QueryClient();
-
-  //         const metadata = {
-  //             name: 'next-reown-appkit',
-  //             description: 'next-reown-appkit',
-  //             url: 'https://github.com/0xonerb/next-reown-appkit-ssr',
-  //             icons: ['https://avatars.githubusercontent.com/u/179229932'],
-  //         };
-
-  //         export const modal = createAppKit({
-  //             adapters: [wagmiAdapter],
-  //             projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
-  //             networks,
-  //             metadata,
-  //             themeMode: 'light',
-  //             features: {
-  //             analytics: true,
-  //             },
-  //             themeVariables: {
-  //             '--w3m-accent': '#000000',
-  //             },
-  //         });
-
-  //         function ContextProvider({
-  //             children,
-  //             cookies,
-  //         }: {
-  //             children: ReactNode;
-  //             cookies: string | null;
-  //         }) {
-  //             const initialState = cookieToInitialState(
-  //             wagmiAdapter.wagmiConfig as Config,
-  //             cookies
-  //             );
-  //             return (
-  //             <WagmiProvider
-  //                 config={wagmiAdapter.wagmiConfig as Config}
-  //                 initialState={initialState}
-  //             >
-  //                 <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  //             </WagmiProvider>
-  //             );
-  //         }
-
-  //         export default ContextProvider;
-  //         `,
+    `,
   '/pages/index.js': `
           export default function Home({ data }) {
           return (
@@ -366,7 +177,7 @@ export const DEFAULT_VIEM_WALLET = {
           return {
               props: { data: "ttttt" },
           }
-      }`,
+   }`,
   '/pages/index.tsx': `import type { NextPage } from 'next';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -436,6 +247,197 @@ export default Home;`,
         "pages/_app.js",
         "pages/index.js"
       ]
-    }`,
-  '.env.development': `NEXT_PUBLIC_PROJECT_ID=55f0a883b25ede7b5f3a96399168e93f`,
+}`,
 };
+
+// Unncessary Code / files
+//   '.env.development': `NEXT_PUBLIC_PROJECT_ID=55f0a883b25ede7b5f3a96399168e93f`,
+// const ConnectButton = () => {
+//   // Add client-side only rendering protection
+//   const [mounted, setMounted] = useState(false);
+//   const [buttonState, setButtonState] = useState({
+//     address: '',
+//     isConnected: false
+//   });
+
+//   useEffect(() => {
+//     // Only import and use the hooks on the client side
+//     const initializeWallet = async () => {
+//       try {
+//         // Dynamic import of the wallet functionality
+//         const { useAppKit, useAppKitAccount } = await import('@reown/appkit/react');
+
+//         // Create a custom hook function to access wallet state
+//         const getWalletState = () => {
+//           const { open } = useAppKit();
+//           const { address, isConnected } = useAppKitAccount();
+
+//           setButtonState({
+//             address,
+//             isConnected
+//           });
+
+//           // Set up click handler
+//           window.handleWalletClick = () => {
+//             if (!isConnected) {
+//               open();
+//             } else {
+//               open({ view: 'Account' });
+//             }
+//           };
+//         };
+
+//         // Initialize the wallet connection
+//         getWalletState();
+//         setMounted(true);
+//       } catch (err) {
+//         console.error("Failed to initialize wallet:", err);
+//         setMounted(true); // Still mark as mounted so we show the fallback button
+//       }
+//     };
+
+//     initializeWallet();
+//   }, []);
+
+//   const formatAddress = (addr: string | undefined) => {
+//     if (!addr) return '';
+//     return \`\${addr.slice(0, 6)}...\${addr.slice(-4)}\`;
+//   };
+
+//   // Server-side or initial render
+//   if (!mounted) {
+//     return (
+//       <button
+//         className='px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors'
+//         disabled
+//       >
+//         Loading...
+//       </button>
+//     );
+//   }
+
+//   // Client-side render after hooks are initialized
+//   return (
+//     <button
+//       onClick={() => window.handleWalletClick?.()}
+//       className='px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors'
+//     >
+//       {buttonState.isConnected ? formatAddress(buttonState.address) : 'Connect'}
+//     </button>
+//   );
+// };
+
+// // Add necessary type for the window object
+// declare global {
+//   interface Window {
+//     handleWalletClick?: () => void;
+//   }
+// }
+
+// export default ConnectButton;
+// `,
+//   'components/Header.tsx': `
+//         import ConnectButton from './ConnectButton';
+
+//         export const Header = () => {
+//             return (
+//             <header className='px-5 py-4 flex justify-between items-center border-b border-gray-200'>
+//                 <div className='flex items-center space-x-3'>
+//                 <h1 className='text-2xl font-bold'>dApp</h1>
+//                 </div>
+//                 <ConnectButton />
+//             </header>
+//             );
+//         };`,
+//   'config/index.ts': `import { cookieStorage, createStorage } from 'wagmi';
+//         import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
+//         import { base, baseSepolia } from '@reown/appkit/networks';
+//         import type { AppKitNetwork } from '@reown/appkit/networks';
+
+//         // Environment variables
+//         export const projectId = "55f0a883b25ede7b5f3a96399168e93f" || '';
+
+//         if (!projectId) {
+//             throw new Error('Project ID is not defined');
+//         }
+
+//         // Define networks - just Base and Base Sepolia
+//         export const networks = [base, baseSepolia] as [
+//             AppKitNetwork,
+//             ...AppKitNetwork[]
+//         ];
+
+//         // Select the appropriate network based on environment variables
+//         const selectedNetwork = process.env.NEXT_PUBLIC_CHAIN_ID
+//             ? networks.find(
+//                 (network) => network.id === Number(process.env.NEXT_PUBLIC_CHAIN_ID)
+//             )
+//             : baseSepolia; // Default to base if not specified
+
+//         // Create the adapter with the appropriate networks
+//         export const wagmiAdapter = new WagmiAdapter({
+//             storage: createStorage({
+//             storage: cookieStorage,
+//             }),
+//             ssr: true,
+//             projectId,
+//             networks: [selectedNetwork] as [AppKitNetwork, ...AppKitNetwork[]],
+//         });
+
+//         export const config = wagmiAdapter.wagmiConfig;
+//         `,
+//   'context/index.tsx': `
+//       'use client';
+
+//         import { wagmiAdapter, networks } from '../config';
+//         import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+//         import { createAppKit } from '@reown/appkit/react';
+//         import React, { type ReactNode } from 'react';
+//         import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi';
+
+//         const queryClient = new QueryClient();
+
+//         const metadata = {
+//             name: 'next-reown-appkit',
+//             description: 'next-reown-appkit',
+//             url: 'https://github.com/0xonerb/next-reown-appkit-ssr',
+//             icons: ['https://avatars.githubusercontent.com/u/179229932'],
+//         };
+
+//         export const modal = createAppKit({
+//             adapters: [wagmiAdapter],
+//             projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
+//             networks,
+//             metadata,
+//             themeMode: 'light',
+//             features: {
+//             analytics: true,
+//             },
+//             themeVariables: {
+//             '--w3m-accent': '#000000',
+//             },
+//         });
+
+//         function ContextProvider({
+//             children,
+//             cookies,
+//         }: {
+//             children: ReactNode;
+//             cookies: string | null;
+//         }) {
+//             const initialState = cookieToInitialState(
+//             wagmiAdapter.wagmiConfig as Config,
+//             cookies
+//             );
+//             return (
+//             <WagmiProvider
+//                 config={wagmiAdapter.wagmiConfig as Config}
+//                 initialState={initialState}
+//             >
+//                 <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+//             </WagmiProvider>
+//             );
+//         }
+
+//         export default ContextProvider;
+//         `,

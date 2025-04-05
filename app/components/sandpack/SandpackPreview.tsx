@@ -9,8 +9,9 @@ import {
   SandpackConsole,
 } from '@codesandbox/sandpack-react';
 import { web9Theme } from './web9Theme';
-import { DEFAULT_WALLET_FILES } from '../../modules/wallet/reference';
+import { DEFAULT_WALLET_FILES } from '../../modules/wallet/reference_old';
 import { DEFAULT_VIEM_WALLET } from '@/app/modules/wallet/reference_viem';
+import { DEFAULT_CURVEGRID_VOTING } from '@/app/modules/voting-app/reference_curvegrid';
 
 const SandpackTabs = () => {
   const { sandpack } = useSandpack();
@@ -52,13 +53,14 @@ const SandpackTabs = () => {
 };
 
 interface SandpackPreviewProps {
-  files?: Record<string, string>;
+  files?: any;
   activePath?: string;
 }
 
 export default function SandpackPreview({
-  // files = DEFAULT_NEXTJS_FILES,
-  files = DEFAULT_VIEM_WALLET,
+  // files = DEFAULT_VIEM_WALLET,
+  files = DEFAULT_CURVEGRID_VOTING,
+  // files: { files },
   activePath = '/app/page.tsx',
 }: SandpackPreviewProps) {
   return (
@@ -77,6 +79,7 @@ export default function SandpackPreview({
         }}
         customSetup={{
           dependencies: {
+            '@curvegrid/multibaas-sdk': '^1.0.2',
             '@reown/appkit': '^1.6.8',
             '@reown/appkit-adapter-wagmi': '^1.6.8',
             '@tailwindcss/postcss': '^4.1.3',

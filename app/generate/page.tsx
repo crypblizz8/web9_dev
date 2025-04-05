@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import ChatInterface from '../components/ChatInterface';
 
@@ -32,15 +32,16 @@ export default function SandpackDemoPage() {
       });
 
       const data = await response.json();
-      console.log('data', data);
 
       if (!response.ok) {
         throw new Error(data.error || 'Failed to generate code');
       }
 
       setCode(data.code);
+      console.log('AI CODEEEEEE', data.code);
 
       // Add assistant response to chat
+      // We can add a simple confirmation message here
       if (chatInterfaceRef.current) {
         chatInterfaceRef.current.addAssistantMessage(
           'Code generated successfully! Check the preview tab to see the result.'
@@ -62,33 +63,26 @@ export default function SandpackDemoPage() {
     }
   };
 
-  // Load saved prompt from localStorage when component mounts
+  // Load prompt from sessionStorage when component mounts
   useEffect(() => {
-    const savedPrompt = localStorage.getItem('savedPrompt');
-    const isProcessed = localStorage.getItem('promptProcessed');
+    const initialPrompt = sessionStorage.getItem('initialPrompt');
 
-    if (savedPrompt && chatInterfaceRef.current && isProcessed !== 'true') {
-      // Mark as processed to prevent duplicates
-      localStorage.setItem('promptProcessed', 'true');
+    if (initialPrompt && chatInterfaceRef.current) {
+      // Remove the prompt from sessionStorage to prevent it from being used again
+      sessionStorage.removeItem('initialPrompt');
 
-      // Add just one user message with the prompt
+      // Add user message with the prompt
       chatInterfaceRef.current.addUserMessage({
         id: Date.now().toString(),
         role: 'user',
-        content: savedPrompt,
+        content: initialPrompt,
       });
 
-      // Wait a bit then handle code generation directly
+      // Wait a bit then handle code generation
       setTimeout(() => {
-        handleGenerateCode(savedPrompt);
+        handleGenerateCode(initialPrompt);
       }, 500);
     }
-
-    // Cleanup function - reset the processed flag when unmounting
-    return () => {
-      localStorage.removeItem('promptProcessed');
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -101,54 +95,7 @@ export default function SandpackDemoPage() {
           </div>
           <h1 className='text-lg font-semibold'>Vib3</h1>
         </div>
-        {/* 
-        <div className='flex-1 p-4'>
-          <div className='bg-gray-800 bg-opacity-40 p-4 rounded mb-6'>
-            <p>
-              Welcome to vib3.dev! Describe what you want to build, and I will
-              generate the code for you.
-            </p>
-          </div>
-
-          <p className='italic mb-2 text-gray-300'>Templates</p>
-          <button
-            onClick={() => console.log('thinking....')}
-            className='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-200'
-          >
-            Wallet
-          </button>
-
-          <button className='ml-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-200'>
-            Voting App
-          </button>
-        </div> */}
-
-        {/* <div className='p-4 border-t border-gray-800'>
-          <div className='flex items-center'>
-            <input
-              type='text'
-              placeholder='Describe what you want to build...'
-              className='flex-1 bg-gray-800 text-white placeholder:text-gray-400 p-2 rounded-md border border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500'
-            />
-            <button className='ml-2 bg-blue-600 p-2 rounded-md'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='20'
-                height='20'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              >
-                <line x1='22' y1='2' x2='11' y2='13'></line>
-                <polygon points='22 2 15 22 11 13 2 9 22 2'></polygon>
-              </svg>
-            </button>
-          </div>
-        </div> */}
-        <div className='border-r border-muted'>
+        <div className='h-full flex border-r border-muted'>
           <ChatInterface
             ref={chatInterfaceRef}
             onSubmit={handleGenerateCode}
@@ -176,32 +123,15 @@ export default function SandpackDemoPage() {
               >
                 <path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'></path>
                 <polyline points='15 3 21 3 21 9'></polyline>
-                <line
-                  x1='10'
-                  y1='14'
-                  x2='21'
-                  y2='3'
-                ></line>
+                <line x1='10' y1='14' x2='21' y2='3'></line>
               </svg>
             </button>
           </div>
         </div>
 
         <div className='flex-1 overflow-hidden'>
-          {code ? (
-            <SandpackPreview
-              files={{
-                '/app/page.tsx': code,
-              }}
-              activePath='/app/page.tsx'
-            />
-          ) : (
-            <div className='flex items-center justify-center h-full bg-[#1a1a1a]'>
-              <p className='text-gray-500'>
-                Code will appear here when generated
-              </p>
-            </div>
-          )}
+          {/* {code ? <SandpackPreview files={code} activePath='/app/page.tsx' />} */}
+          {code && <SandpackPreview activePath='/pages/_app.tsx' />}
         </div>
       </div>
     </div>
