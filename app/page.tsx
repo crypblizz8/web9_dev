@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
+import Image from 'next/image';
 
 // Use dynamic import to avoid SSR issues with Sandpack
 const SandpackPreview = dynamic(
@@ -41,14 +41,34 @@ export default function Page() {
       {/* Header */}
       <header className='p-4 flex justify-between items-center'>
         <div className='flex items-center'>
-          <div className='text-2xl font-bold'>web9</div>
+          <div className='flex flex-row items-center gap-2 p-4'>
+            <Image
+              src='/vib3_logo.png'
+              alt='Vib3 Logo'
+              width={40}
+              height={40}
+            />
+            <Image
+              src='/vib3_text_logo.png'
+              alt='Vib3'
+              width={84}
+              height={30}
+            />
+          </div>
         </div>
-        {/*  */}
       </header>
 
       {/* Main content */}
       <main className='flex-1 flex flex-col items-center justify-center p-4'>
-        <h1 className='text-4xl font-bold mb-8'>What can I help you ship?</h1>
+        <Image
+          className='mb-8'
+          src='/vib3_logo.png'
+          alt='Vib3 Logo'
+          width={120}
+          height={120}
+        />
+        <h1 className='text-6xl font-bold mb-4'>Turn your ideas</h1>
+        <h1 className='text-6xl font-bold mb-20'>into dapps</h1>
 
         <form onSubmit={handleSubmit} className='w-full max-w-2xl'>
           <div className='relative'>
@@ -57,7 +77,7 @@ export default function Page() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder='Build a staking dapp...'
-              className='w-full bg-[#111] border border-[#333] rounded-md p-4 pr-12 focus:outline-none focus:ring-1 focus:ring-gray-500'
+              className='w-full h-[100px] bg-[#111] border border-[#333] rounded-md p-4 pr-12 focus:outline-none focus:ring-1 focus:ring-gray-500'
             />
             <div className='absolute right-0 top-0 h-full flex items-center pr-3 gap-2'>
               <button
