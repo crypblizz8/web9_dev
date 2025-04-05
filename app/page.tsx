@@ -2,17 +2,9 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-<<<<<<< HEAD
-import { useRouter } from 'next/navigation';
 import { DEFAULT_CURVEGRID_VOTING } from './modules/voting-app/reference_curvegrid';
 import { DEFAULT_VIEM_WALLET } from './modules/wallet/reference_viem';
-=======
-import {
-  useRouter,
-  useSearchParams,
-  createSearchParams,
-} from 'next/navigation';
->>>>>>> fix/prompting
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const router = useRouter();
@@ -413,8 +405,8 @@ export default function Page() {
   );
 }
 
+// Useless old code
 // 'use client';
-
 // import { useState, useRef } from 'react';
 // import CodeDisplay from './components/CodeDisplay';
 // import Preview from './components/Preview';

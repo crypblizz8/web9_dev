@@ -91,57 +91,10 @@ export default function SandpackDemoPage() {
       <div className='w-1/3 border-r border-gray-800 flex flex-col'>
         <div className='p-4 border-b border-gray-800 flex items-center'>
           <div className='w-8 h-8 bg-white rounded-full flex items-center justify-center text-black font-bold mr-3'>
-            web9
+            Vib3
           </div>
-          <h1 className='text-lg font-semibold'>web9</h1>
+          <h1 className='text-lg font-semibold'>Vib3</h1>
         </div>
-        {/* 
-        <div className='flex-1 p-4'>
-          <div className='bg-gray-800 bg-opacity-40 p-4 rounded mb-6'>
-            <p>
-              Welcome to vib3.dev! Describe what you want to build, and I will
-              generate the code for you.
-            </p>
-          </div>
-
-          <p className='italic mb-2 text-gray-300'>Templates</p>
-          <button
-            onClick={() => console.log('thinking....')}
-            className='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-200'
-          >
-            Wallet
-          </button>
-
-          <button className='ml-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-200'>
-            Voting App
-          </button>
-        </div> */}
-
-        {/* <div className='p-4 border-t border-gray-800'>
-          <div className='flex items-center'>
-            <input
-              type='text'
-              placeholder='Describe what you want to build...'
-              className='flex-1 bg-gray-800 text-white placeholder:text-gray-400 p-2 rounded-md border border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500'
-            />
-            <button className='ml-2 bg-blue-600 p-2 rounded-md'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='20'
-                height='20'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              >
-                <line x1='22' y1='2' x2='11' y2='13'></line>
-                <polygon points='22 2 15 22 11 13 2 9 22 2'></polygon>
-              </svg>
-            </button>
-          </div>
-        </div> */}
         <div className='h-full flex border-r border-muted'>
           <ChatInterface
             ref={chatInterfaceRef}
