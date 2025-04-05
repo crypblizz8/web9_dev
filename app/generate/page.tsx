@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import ChatInterface from '../components/ChatInterface';
 import Image from 'next/image';
+import LoadingLogo from '../components/LoadingLogo';
 
 // Use dynamic import to avoid SSR issues with Sandpack
 const SandpackPreview = dynamic(
@@ -89,8 +90,8 @@ export default function SandpackDemoPage() {
   return (
     <div className='flex h-screen bg-[#1e1e1e] text-white'>
       {/* Left sidebar - similar to your web9 chat */}
-      <div className='w-1/3 border-r border-gray-800 flex flex-col'>
-        <div className='p-4 border-b border-gray-800 flex items-center'>
+      <div className='w-1/3 border-r border-[#333] flex flex-col'>
+        <div className='p-4 flex items-center'>
           <Image
             src='/vib3_logo.png'
             alt='Vib3 Logo'
@@ -100,7 +101,7 @@ export default function SandpackDemoPage() {
           />
           <h1 className='text-lg font-semibold'>Vib3</h1>
         </div>
-        <div className='h-full flex border-r border-muted'>
+        <div className='h-full flex'>
           <ChatInterface
             ref={chatInterfaceRef}
             onSubmit={handleGenerateCode}
@@ -110,8 +111,8 @@ export default function SandpackDemoPage() {
       </div>
 
       {/* Right side - Code and Preview */}
-      <div className='flex-1 flex flex-col'>
-        <div className='p-4 border-b border-gray-800 flex justify-between items-center'>
+      <div className='flex-1 flex flex-col border-l border-[#333] -ml-px'>
+        <div className='p-4 border-b border-[#333] flex justify-between items-center'>
           <h2 className='text-lg font-semibold'>Generated Code</h2>
           <div className='flex space-x-2'>
             <button className='p-1.5 rounded hover:bg-gray-800'>
@@ -140,8 +141,11 @@ export default function SandpackDemoPage() {
         </div>
 
         <div className='flex-1 overflow-hidden'>
-          {/* {code ? <SandpackPreview files={code} activePath='/app/page.tsx' />} */}
-          {code && <SandpackPreview activePath='/pages/_app.tsx' />}
+          {isLoading ? (
+            <LoadingLogo />
+          ) : (
+            code && <SandpackPreview activePath='/pages/_app.tsx' />
+          )}
         </div>
       </div>
     </div>
