@@ -1,12 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { bricolage } from './fonts';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
-
 export const metadata: Metadata = {
-  title: 'Web nine',
-  description: 'Generate dapps from text prompts using AI',
+  title: 'Vib3',
+  description: 'Turn your ideas into dapps',
 };
 
 export default function RootLayout({
@@ -16,7 +14,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link
+          href='https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500&display=swap'
+          rel='stylesheet'
+        />
+      </head>
+      <body className={bricolage.className}>{children}</body>
     </html>
   );
 }
