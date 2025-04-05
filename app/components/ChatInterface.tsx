@@ -63,12 +63,7 @@ const ChatInterface = forwardRef<
 
   return (
     <div className='flex flex-col h-full'>
-      <div className='p-4 border-b border-muted flex items-center'>
-        <div className='w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold mr-2'>
-          web9
-        </div>
-        <h1 className='text-lg font-medium'>web nine</h1>
-      </div>
+      <div className='p-4 border-b border-muted flex items-center'></div>
 
       <div className='flex-1 overflow-y-auto p-4 space-y-4'>
         {messages.map((message) => (

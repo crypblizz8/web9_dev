@@ -89,10 +89,10 @@ export default function Page() {
     if (prompt.trim()) {
       console.log('Submitting prompt:', prompt);
       console.log('Selected options:', selectedOptions);
-
       // Navigate to the next page
-      router.push('/generate');
     }
+    console.log('prompt', prompt);
+    router.push('./generate');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -345,10 +345,7 @@ export default function Page() {
         </div>
 
         <div className='w-full max-w-[920px] mx-auto'>
-          <div
-            className='relative w-full'
-            style={{ paddingRight: '5px' }}
-          >
+          <div className='relative w-full' style={{ paddingRight: '5px' }}>
             <textarea
               value={prompt || getExampleText()}
               onChange={(e) => {
@@ -385,10 +382,7 @@ export default function Page() {
         </div>
       </main>
 
-      <style
-        jsx
-        global
-      >{`
+      <style jsx global>{`
         textarea::-webkit-scrollbar {
           width: 8px;
         }
