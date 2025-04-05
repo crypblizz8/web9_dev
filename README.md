@@ -19,12 +19,10 @@ Vibe coding and AI Assitant tools are amazing... BUT... there is a limitation fo
 
 Frontend: Next.js 14, React 18, Tailwind CSS
 AI: Claude 3.5
-Code Preview / Editor: Sandpack + Prism.js + Simpel Code Editor
+Code Preview / Editor: Sandpack + Prism.js + Simple Code Editor
 
 ### Modules / Relevant Sponsors
 
-- 1inch
 - CurveGrid
-- (Nodit)
+- 1inch
 - (Celo)
-- (Polygon)
