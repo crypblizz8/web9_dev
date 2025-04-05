@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import ChatInterface from '../components/ChatInterface';
 
@@ -41,7 +41,6 @@ export default function SandpackDemoPage() {
       setCode(data.code);
 
       // Add assistant response to chat
-      // We can add a simple confirmation message here
       if (chatInterfaceRef.current) {
         chatInterfaceRef.current.addAssistantMessage(
           'Code generated successfully! Check the preview tab to see the result.'
@@ -63,15 +62,44 @@ export default function SandpackDemoPage() {
     }
   };
 
+  // Load saved prompt from localStorage when component mounts
+  useEffect(() => {
+    const savedPrompt = localStorage.getItem('savedPrompt');
+    const isProcessed = localStorage.getItem('promptProcessed');
+
+    if (savedPrompt && chatInterfaceRef.current && isProcessed !== 'true') {
+      // Mark as processed to prevent duplicates
+      localStorage.setItem('promptProcessed', 'true');
+
+      // Add just one user message with the prompt
+      chatInterfaceRef.current.addUserMessage({
+        id: Date.now().toString(),
+        role: 'user',
+        content: savedPrompt,
+      });
+
+      // Wait a bit then handle code generation directly
+      setTimeout(() => {
+        handleGenerateCode(savedPrompt);
+      }, 500);
+    }
+
+    // Cleanup function - reset the processed flag when unmounting
+    return () => {
+      localStorage.removeItem('promptProcessed');
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className='flex h-screen bg-[#1e1e1e] text-white'>
       {/* Left sidebar - similar to your web9 chat */}
       <div className='w-1/3 border-r border-gray-800 flex flex-col'>
         <div className='p-4 border-b border-gray-800 flex items-center'>
           <div className='w-8 h-8 bg-white rounded-full flex items-center justify-center text-black font-bold mr-3'>
-            web9
+            Vib3
           </div>
-          <h1 className='text-lg font-semibold'>web9</h1>
+          <h1 className='text-lg font-semibold'>Vib3</h1>
         </div>
         {/* 
         <div className='flex-1 p-4'>
@@ -148,15 +176,32 @@ export default function SandpackDemoPage() {
               >
                 <path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'></path>
                 <polyline points='15 3 21 3 21 9'></polyline>
-                <line x1='10' y1='14' x2='21' y2='3'></line>
+                <line
+                  x1='10'
+                  y1='14'
+                  x2='21'
+                  y2='3'
+                ></line>
               </svg>
             </button>
           </div>
         </div>
 
         <div className='flex-1 overflow-hidden'>
-          {/* <SandpackPreview files={SAMPLE_PROJECT} activePath='/app/page.tsx' /> */}
-          {/* <SandpackPreview activePath='/pages/index.tsx' /> */}
+          {code ? (
+            <SandpackPreview
+              files={{
+                '/app/page.tsx': code,
+              }}
+              activePath='/app/page.tsx'
+            />
+          ) : (
+            <div className='flex items-center justify-center h-full bg-[#1a1a1a]'>
+              <p className='text-gray-500'>
+                Code will appear here when generated
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
