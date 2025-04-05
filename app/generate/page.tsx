@@ -10,8 +10,6 @@ const SandpackPreview = dynamic(
   { ssr: false }
 );
 
-console.log('DEFAULT_CURVEGRID');
-
 export default function SandpackDemoPage() {
   const chatInterfaceRef = useRef<any>(null);
   const [code, setCode] = useState('');
@@ -156,9 +154,9 @@ export default function SandpackDemoPage() {
           </div>
         </div>
 
-        <div className='flex-1 overflow-hidden'>
+        <div className='flex-1'>
           {/* {code ? <SandpackPreview files={code} activePath='/app/page.tsx' />} */}
-          {code && <SandpackPreview activePath='/app/page.tsx' />}
+          {code && <SandpackPreview activePath='/pages/_app.tsx' />}
         </div>
       </div>
     </div>
