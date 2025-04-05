@@ -64,11 +64,12 @@ interface MultiBaasHook {
 }
 
 const useMultiBaas = (): MultiBaasHook => {
-  const mbBaseUrl = 'XXX';
-  const mbApiKey =
-    'XXX';
-  const votingContractLabel = 'XXX';
-  const votingAddressAlias = 'XXX';
+  const mbBaseUrl = process.env.NEXT_PUBLIC_MULTIBAAS_DEPLOYMENT_URL || '';
+  const mbApiKey = process.env.NEXT_PUBLIC_MULTIBAAS_DAPP_USER_API_KEY || '';
+  const votingContractLabel =
+    process.env.NEXT_PUBLIC_MULTIBAAS_VOTING_CONTRACT_LABEL || '';
+  const votingAddressAlias =
+    process.env.NEXT_PUBLIC_MULTIBAAS_VOTING_ADDRESS_ALIAS || '';
 
   const chain = 'ethereum';
 
@@ -460,13 +461,5 @@ const VoteButton: FC<VoteButtonProps> = ({
 };
 
 export default VoteButton;
-`,
-  'env.development': `
-NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID=55f0a883b25ede7b5f3a96399168e93f
-NEXT_PUBLIC_MULTIBAAS_DEPLOYMENT_URL='https://si2rmlb7ffem7famtstpa3xz7m.multibaas.com/'
-NEXT_PUBLIC_MULTIBAAS_DAPP_USER_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzQzNzc5MTczLCJqdGkiOiJlZjg1ODMzNi00YmVhLTQxZjItOWRjYy1mNGRiODA3OWUzZGUifQ.907ZZTyBqcL4PogL8Bxczkyw8Vl5L8gm28pap5jgvSA
-NEXT_PUBLIC_MULTIBAAS_VOTING_CONTRACT_LABEL='simplevoting'
-NEXT_PUBLIC_MULTIBAAS_VOTING_ADDRESS_ALIAS='simplevoting1'
-NEXT_PUBLIC_MULTIBAAS_CHAIN_ID='84532'
 `,
 };
