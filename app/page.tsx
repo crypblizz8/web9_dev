@@ -86,13 +86,17 @@ export default function Page() {
   };
 
   const handleSubmit = () => {
-    if (prompt.trim()) {
-      console.log('Submitting prompt:', prompt);
-      console.log('Selected options:', selectedOptions);
-      // Navigate to the next page
-    }
-    console.log('prompt', prompt);
-    router.push('./generate');
+    // Save the current prompt to localStorage before navigating
+    const finalPrompt = prompt || getExampleText();
+    localStorage.setItem('savedPrompt', finalPrompt);
+
+    // Reset the processed flag to allow processing on the next page
+    localStorage.removeItem('promptProcessed');
+
+    console.log('Submitting prompt:', finalPrompt);
+
+    // Navigate to the next page
+    router.push('/generate');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -345,7 +349,10 @@ export default function Page() {
         </div>
 
         <div className='w-full max-w-[920px] mx-auto'>
-          <div className='relative w-full' style={{ paddingRight: '5px' }}>
+          <div
+            className='relative w-full'
+            style={{ paddingRight: '5px' }}
+          >
             <textarea
               value={prompt || getExampleText()}
               onChange={(e) => {
@@ -382,7 +389,10 @@ export default function Page() {
         </div>
       </main>
 
-      <style jsx global>{`
+      <style
+        jsx
+        global
+      >{`
         textarea::-webkit-scrollbar {
           width: 8px;
         }
