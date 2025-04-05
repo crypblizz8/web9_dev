@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import ChatInterface from '../components/ChatInterface';
+import Image from 'next/image';
 
 // Use dynamic import to avoid SSR issues with Sandpack
 const SandpackPreview = dynamic(
@@ -90,9 +91,13 @@ export default function SandpackDemoPage() {
       {/* Left sidebar - similar to your web9 chat */}
       <div className='w-1/3 border-r border-gray-800 flex flex-col'>
         <div className='p-4 border-b border-gray-800 flex items-center'>
-          <div className='w-8 h-8 bg-white rounded-full flex items-center justify-center text-black font-bold mr-3'>
-            Vib3
-          </div>
+          <Image
+            src='/vib3_logo.png'
+            alt='Vib3 Logo'
+            width={26}
+            height={26}
+            className='mr-2'
+          />
           <h1 className='text-lg font-semibold'>Vib3</h1>
         </div>
         <div className='h-full flex border-r border-muted'>
@@ -123,7 +128,12 @@ export default function SandpackDemoPage() {
               >
                 <path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'></path>
                 <polyline points='15 3 21 3 21 9'></polyline>
-                <line x1='10' y1='14' x2='21' y2='3'></line>
+                <line
+                  x1='10'
+                  y1='14'
+                  x2='21'
+                  y2='3'
+                ></line>
               </svg>
             </button>
           </div>
