@@ -124,9 +124,7 @@ const ChatInterface = forwardRef<
   }));
 
   return (
-    <div className='flex flex-col h-full w-full'>
-      <div className='p-4 border-b border-muted flex items-center'></div>
-
+    <div className='flex flex-col h-full w-full bg-[#1e1e1e]'>
       <div className='flex-1 overflow-y-auto p-4 space-y-4'>
         {messages.map((message) => (
           <div
@@ -139,8 +137,8 @@ const ChatInterface = forwardRef<
             <div
               className={`max-w-[80%] p-3 rounded-lg ${
                 message.role === 'user'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted'
+                  ? 'bg-transparent border-2 border-[#3B3B3B] text-white'
+                  : 'bg-[#3B3B3B] text-white'
               }`}
             >
               {message.content}
@@ -150,11 +148,11 @@ const ChatInterface = forwardRef<
 
         {isLoading && (
           <div className='flex justify-start'>
-            <div className='bg-muted p-3 rounded-lg'>
+            <div className='bg-[#3B3B3B] p-3 rounded-lg'>
               <div className='flex space-x-2'>
-                <div className='w-2 h-2 rounded-full bg-muted-foreground animate-bounce'></div>
-                <div className='w-2 h-2 rounded-full bg-muted-foreground animate-bounce delay-75'></div>
-                <div className='w-2 h-2 rounded-full bg-muted-foreground animate-bounce delay-150'></div>
+                <div className='w-2 h-2 rounded-full bg-gray-400 animate-bounce'></div>
+                <div className='w-2 h-2 rounded-full bg-gray-400 animate-bounce delay-75'></div>
+                <div className='w-2 h-2 rounded-full bg-gray-400 animate-bounce delay-150'></div>
               </div>
             </div>
           </div>
@@ -163,49 +161,71 @@ const ChatInterface = forwardRef<
 
       <form
         onSubmit={handleSubmit}
-        className='border-t border-muted p-4'
+        className='p-4'
       >
-        <div className='flex items-center'>
-          <input
-            type='text'
+        <div className='relative'>
+          <textarea
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder='Describe what you want to build...'
-            className='flex-1 p-2 border border-muted rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary text-black'
+            placeholder='Tell me what to build'
+            className='w-full h-[120px] bg-transparent border border-[#EEEDE1] rounded-lg px-6 pt-5 pb-11 focus:outline-none focus:border-[#507C36] focus:ring-1 focus:ring-[#507C36] transition-colors duration-150 resize-none overflow-y-auto text-[#EEEDE1]'
             disabled={isLoading}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e);
+              }
+            }}
           />
           <button
             type='submit'
             disabled={isLoading || !inputValue.trim()}
-            className='p-2 bg-primary text-primary-foreground rounded-r-md hover:bg-opacity-90 disabled:opacity-50'
+            className='absolute right-4 bottom-4 w-6 h-6 bg-[#507C36] rounded flex items-center justify-center hover:bg-[#5d8f3f] transition-colors duration-150 disabled:opacity-50'
           >
             <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
+              width='14'
+              height='14'
+              viewBox='0 0 14 14'
               fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
+              xmlns='http://www.w3.org/2000/svg'
             >
-              <line
-                x1='22'
-                y1='2'
-                x2='11'
-                y2='13'
-              ></line>
-              <polygon points='22 2 15 22 11 13 2 9 22 2'></polygon>
+              <path
+                d='M7 1L7 13M7 1L1 7M7 1L13 7'
+                stroke='white'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
             </svg>
           </button>
         </div>
       </form>
+
+      <style
+        jsx
+        global
+      >{`
+        textarea::-webkit-scrollbar {
+          width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+          background: transparent;
+          margin: 5px 0;
+        }
+        textarea::-webkit-scrollbar-thumb {
+          background-color: #9ca3af;
+          border-radius: 10px;
+          border: 3px solid #1e1e1e;
+        }
+        textarea::placeholder {
+          color: #9ca3af;
+        }
+      `}</style>
     </div>
   );
 });
 
 // Add display name
-// ChatInterface.displayName = 'ChatInterface';
+ChatInterface.displayName = 'ChatInterface';
 
 export default ChatInterface;

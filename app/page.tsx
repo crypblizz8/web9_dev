@@ -108,7 +108,7 @@ export default function Page() {
   };
 
   return (
-    <div className='min-h-screen bg-black text-white flex flex-col'>
+    <div className='min-h-screen bg-[#1e1e1e] text-white flex flex-col'>
       {/* Header */}
       <header className='p-6'>
         <div className='flex items-center gap-2 pl-5'>
@@ -147,7 +147,7 @@ export default function Page() {
             <h1 className='text-[48px] font-black leading-[1.1] flex items-center justify-center gap-2 font-["Bricolage_Grotesque"] text-[#EEEDE1]'>
               into
               <span className='relative'>
-                <span className='relative z-10'>dapps</span>
+                <span className='relative z-10'>dApps</span>
                 <span
                   className='absolute left-0 right-0 bottom-0 h-[50%] bg-[#507C36]'
                   style={{ bottom: '-5%' }}
@@ -233,7 +233,7 @@ export default function Page() {
             >
               <div className='w-[20px] h-[20px] flex-shrink-0 flex items-center justify-center'>
                 <Image
-                  src='/icons/dashboard.svg'
+                  src='/icons/swap.svg'
                   alt='Exchange'
                   width={20}
                   height={20}
@@ -298,7 +298,7 @@ export default function Page() {
             >
               <div className='w-[20px] h-[20px] flex-shrink-0 flex items-center justify-center'>
                 <Image
-                  src='/icons/dashboard.svg'
+                  src='/icons/network.svg'
                   alt='Network'
                   width={20}
                   height={20}
@@ -328,7 +328,7 @@ export default function Page() {
             >
               <div className='w-[20px] h-[20px] flex-shrink-0 flex items-center justify-center'>
                 <Image
-                  src='/icons/wallet.svg'
+                  src='/icons/gas.svg'
                   alt='Gas'
                   width={20}
                   height={20}
@@ -350,7 +350,10 @@ export default function Page() {
         </div>
 
         <div className='w-full max-w-[920px] mx-auto'>
-          <div className='relative w-full' style={{ paddingRight: '5px' }}>
+          <div
+            className='relative w-full'
+            style={{ paddingRight: '5px' }}
+          >
             <textarea
               value={prompt || getExampleText()}
               onChange={(e) => {
@@ -387,7 +390,10 @@ export default function Page() {
         </div>
       </main>
 
-      <style jsx global>{`
+      <style
+        jsx
+        global
+      >{`
         textarea::-webkit-scrollbar {
           width: 8px;
         }
