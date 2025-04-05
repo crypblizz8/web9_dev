@@ -2,7 +2,7 @@ export const DEFAULT_VIEM_WALLET = {
   'components/WalletConnect.tsx': `
               import React, { useState, useEffect } from 'react';
               import { createWalletClient, custom } from 'viem';
-              import { mainnet } from 'viem/chains';
+              import { baseSepolia } from 'viem/chains';
 
               type WalletState = {
                 address: string | null;
@@ -102,7 +102,7 @@ export const DEFAULT_VIEM_WALLET = {
 
                   try {
                     const client = createWalletClient({
-                      chain: mainnet,
+                      chain: baseSepolia,
                       transport: custom(window.ethereum),
                     });
 

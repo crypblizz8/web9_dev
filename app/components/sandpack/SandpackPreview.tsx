@@ -9,7 +9,7 @@ import {
   SandpackConsole,
 } from '@codesandbox/sandpack-react';
 import { web9Theme } from './web9Theme';
-import { DEFAULT_WALLET_FILES } from '../../modules/wallet/reference';
+import { DEFAULT_WALLET_FILES } from '../../modules/wallet/reference_old';
 import { DEFAULT_VIEM_WALLET } from '@/app/modules/wallet/reference_viem';
 
 const SandpackTabs = () => {
@@ -77,6 +77,7 @@ export default function SandpackPreview({
         }}
         customSetup={{
           dependencies: {
+            '@curvegrid/multibaas-sdk': '^1.0.2',
             '@reown/appkit': '^1.6.8',
             '@reown/appkit-adapter-wagmi': '^1.6.8',
             '@tailwindcss/postcss': '^4.1.3',
