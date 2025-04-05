@@ -88,14 +88,17 @@ export default function Page() {
   };
 
   const handleSubmit = () => {
-    if (prompt.trim()) {
-      console.log('Submitting prompt:', prompt);
-      console.log('Selected options:', selectedOptions);
-      // Navigate to the next page
-    }
-    //LABUBU LINE
-    console.log('prompt', prompt);
-    router.push('./generate');
+    // Save the current prompt to localStorage before navigating
+    const finalPrompt = prompt || getExampleText();
+    localStorage.setItem('savedPrompt', finalPrompt);
+
+    // Reset the processed flag to allow processing on the next page
+    localStorage.removeItem('promptProcessed');
+
+    console.log('Submitting prompt:', finalPrompt);
+
+    // Navigate to the next page
+    router.push('/generate');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

@@ -19,7 +19,12 @@ interface ChatInterfaceProps {
 
 // Add display name to fix lint error
 const ChatInterface = forwardRef<
-  { addAssistantMessage: (content: string) => void },
+  {
+    addAssistantMessage: (content: string) => void;
+    addUserMessage: (message: Message) => void;
+    setInputValue: (value: string) => void;
+    updateSystemMessage: (content: string) => void;
+  },
   ChatInterfaceProps
 >(({ onSubmit, isLoading }, ref) => {
   const [inputValue, setInputValue] = useState('');
@@ -27,8 +32,7 @@ const ChatInterface = forwardRef<
     {
       id: '1',
       role: 'system',
-      content:
-        "Welcome to Web 9! Describe what you want to build, and I'll generate the code for you.",
+      content: "Welcome to Vib3! Let's start building.",
     },
   ]);
 
@@ -46,14 +50,20 @@ const ChatInterface = forwardRef<
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (inputValue.trim() && !isLoading) {
-      // Add user message to chat
-      const userMessage: Message = {
-        id: Date.now().toString(),
-        role: 'user',
-        content: inputValue,
-      };
+      // Add user message to chat if it doesn't already exist
+      const messageExists = messages.some(
+        (msg) => msg.role === 'user' && msg.content === inputValue
+      );
 
-      setMessages((prev) => [...prev, userMessage]);
+      if (!messageExists) {
+        const userMessage: Message = {
+          id: Date.now().toString(),
+          role: 'user',
+          content: inputValue,
+        };
+
+        setMessages((prev) => [...prev, userMessage]);
+      }
 
       // Send to parent for processing
       onSubmit(inputValue);
@@ -73,9 +83,44 @@ const ChatInterface = forwardRef<
     setMessages((prev) => [...prev, assistantMessage]);
   };
 
-  // Expose the addAssistantMessage method to parent components
+  const addUserMessage = (message: Message) => {
+    // Check if a message with this content already exists to avoid duplicates
+    const messageExists = messages.some(
+      (msg) => msg.role === 'user' && msg.content === message.content
+    );
+
+    if (!messageExists) {
+      setMessages((prev) => [...prev, message]);
+    }
+  };
+
+  const updateSystemMessage = (content: string) => {
+    // Only update the system message
+    setMessages((prev) => {
+      // Find the system message
+      const updatedMessages = [...prev];
+      const systemMessageIndex = updatedMessages.findIndex(
+        (msg) => msg.role === 'system'
+      );
+
+      if (systemMessageIndex !== -1) {
+        // Update existing system message
+        updatedMessages[systemMessageIndex] = {
+          ...updatedMessages[systemMessageIndex],
+          content: "Welcome to Vib3! Let's start building.",
+        };
+      }
+
+      return updatedMessages;
+    });
+  };
+
+  // Expose methods to parent components
   useImperativeHandle(ref, () => ({
     addAssistantMessage,
+    addUserMessage,
+    setInputValue,
+    updateSystemMessage,
   }));
 
   return (
@@ -89,6 +134,7 @@ const ChatInterface = forwardRef<
             className={`flex ${
               message.role === 'user' ? 'justify-end' : 'justify-start'
             }`}
+            data-role={message.role}
           >
             <div
               className={`max-w-[80%] p-3 rounded-lg ${
@@ -115,7 +161,10 @@ const ChatInterface = forwardRef<
         )}
       </div>
 
-      <form onSubmit={handleSubmit} className='border-t border-muted p-4'>
+      <form
+        onSubmit={handleSubmit}
+        className='border-t border-muted p-4'
+      >
         <div className='flex items-center'>
           <input
             type='text'
@@ -141,7 +190,12 @@ const ChatInterface = forwardRef<
               strokeLinecap='round'
               strokeLinejoin='round'
             >
-              <line x1='22' y1='2' x2='11' y2='13'></line>
+              <line
+                x1='22'
+                y1='2'
+                x2='11'
+                y2='13'
+              ></line>
               <polygon points='22 2 15 22 11 13 2 9 22 2'></polygon>
             </svg>
           </button>

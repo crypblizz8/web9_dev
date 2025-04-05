@@ -154,7 +154,7 @@ export default function SandpackDemoPage() {
           </div>
         </div>
 
-        <div className='flex-1'>
+        <div className='flex-1 overflow-hidden'>
           {/* {code ? <SandpackPreview files={code} activePath='/app/page.tsx' />} */}
           {code && <SandpackPreview activePath='/pages/_app.tsx' />}
         </div>
