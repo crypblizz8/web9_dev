@@ -1,4 +1,10 @@
-import { useState, FormEvent, forwardRef, useImperativeHandle } from 'react';
+import {
+  useState,
+  FormEvent,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 
 interface Message {
   id: string;
@@ -29,6 +35,17 @@ const ChatInterface = forwardRef<
       content: "Welcome to Vib3! Let's start building.",
     },
   ]);
+
+  useEffect(() => {
+    if (isLoading) {
+      const loadingMessage: Message = {
+        id: Date.now().toString(),
+        role: 'assistant',
+        content: 'Generating code...',
+      };
+      setMessages((prev) => [...prev, loadingMessage]);
+    }
+  }, [isLoading]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -107,7 +124,7 @@ const ChatInterface = forwardRef<
   }));
 
   return (
-    <div className='flex flex-col h-full'>
+    <div className='flex flex-col h-full w-full'>
       <div className='p-4 border-b border-muted flex items-center'></div>
 
       <div className='flex-1 overflow-y-auto p-4 space-y-4'>
@@ -154,7 +171,7 @@ const ChatInterface = forwardRef<
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder='Describe what you want to build...'
-            className='flex-1 p-2 border border-muted rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary'
+            className='flex-1 p-2 border border-muted rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary text-black'
             disabled={isLoading}
           />
           <button
@@ -189,6 +206,6 @@ const ChatInterface = forwardRef<
 });
 
 // Add display name
-ChatInterface.displayName = 'ChatInterface';
+// ChatInterface.displayName = 'ChatInterface';
 
 export default ChatInterface;

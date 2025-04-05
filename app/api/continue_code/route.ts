@@ -1,4 +1,3 @@
-import { DEFAULT_VIEM_WALLET } from '@/app/modules/wallet/reference_viem';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -35,31 +34,10 @@ export async function POST(request: Request) {
             },
             {
               role: 'user',
-              content: `ONLY CODE OUTPUT You must follow the exact format / output of ${DEFAULT_VIEM_WALLET} with tailwind styling. :
-                    1. Use viem for wallet interaction
-                    2. Handle wallet connection states properly
-                    3. Implement proper error handling
-                    4. Use TypeScript with appropriate interfaces
-                    5. Support wallet connection events
-                    6. Allow wallet disconnection
-                    7. Be compatible with Next.js 12.1.6 and React 18.2.0
-                    8. Use Tailwind CSS for styling
-                    IMPORTANT: Ensure format follows 'FOLDER/FILENAME': CODE... and comma separted. like the object example. IMPORTANT
+              content: `Continue to edit the code as per the provided codebase ${prompt}.  Be compatible with Next.js 12.1.6 and React 18.2.0. Limit changes to the wallet infastructure code.
                     IMPORTANT: Your entire response must be ONLY the code - no introduction, no explanation, just the code itself.`,
             },
           ],
-
-          // messages: [
-          //   {
-          //     role: 'system',
-          //     content:
-          //       'You are a skilled web developer specializing in Next.js, React, and Tailwind CSS. You generate clean, modern, responsive code based on user descriptions.',
-          //   },
-          //   {
-          //     role: 'user',
-          //     content: prompt,
-          //   },
-          // ],
         }),
       }
     );

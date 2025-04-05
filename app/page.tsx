@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { DEFAULT_CURVEGRID_VOTING } from './modules/voting-app/reference_curvegrid';
+import { DEFAULT_VIEM_WALLET } from './modules/wallet/reference_viem';
 import { useRouter } from 'next/navigation';
 
 export default function Page() {
@@ -86,16 +88,15 @@ export default function Page() {
   };
 
   const handleSubmit = () => {
-    // Save the current prompt to localStorage before navigating
+    // Get the final prompt
     const finalPrompt = prompt || getExampleText();
-    localStorage.setItem('savedPrompt', finalPrompt);
-
-    // Reset the processed flag to allow processing on the next page
-    localStorage.removeItem('promptProcessed');
 
     console.log('Submitting prompt:', finalPrompt);
 
-    // Navigate to the next page
+    // Store the prompt in sessionStorage before navigation
+    sessionStorage.setItem('initialPrompt', finalPrompt);
+
+    // Navigate to generate page
     router.push('/generate');
   };
 
@@ -349,10 +350,7 @@ export default function Page() {
         </div>
 
         <div className='w-full max-w-[920px] mx-auto'>
-          <div
-            className='relative w-full'
-            style={{ paddingRight: '5px' }}
-          >
+          <div className='relative w-full' style={{ paddingRight: '5px' }}>
             <textarea
               value={prompt || getExampleText()}
               onChange={(e) => {
@@ -389,10 +387,7 @@ export default function Page() {
         </div>
       </main>
 
-      <style
-        jsx
-        global
-      >{`
+      <style jsx global>{`
         textarea::-webkit-scrollbar {
           width: 8px;
         }
@@ -410,8 +405,8 @@ export default function Page() {
   );
 }
 
+// Useless old code
 // 'use client';
-
 // import { useState, useRef } from 'react';
 // import CodeDisplay from './components/CodeDisplay';
 // import Preview from './components/Preview';
