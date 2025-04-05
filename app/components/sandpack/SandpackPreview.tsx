@@ -52,13 +52,13 @@ const SandpackTabs = () => {
 };
 
 interface SandpackPreviewProps {
-  files?: Record<string, string>;
+  files?: any;
   activePath?: string;
 }
 
 export default function SandpackPreview({
-  // files = DEFAULT_NEXTJS_FILES,
   files = DEFAULT_VIEM_WALLET,
+  // files: { files },
   activePath = '/app/page.tsx',
 }: SandpackPreviewProps) {
   return (

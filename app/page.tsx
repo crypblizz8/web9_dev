@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { DEFAULT_CURVEGRID_VOTING } from './modules/voting-app/reference_curvegrid';
+import { DEFAULT_VIEM_WALLET } from './modules/wallet/reference_viem';
 
 export default function Page() {
   const router = useRouter();
@@ -91,6 +93,7 @@ export default function Page() {
       console.log('Selected options:', selectedOptions);
       // Navigate to the next page
     }
+    //LABUBU LINE
     console.log('prompt', prompt);
     router.push('./generate');
   };

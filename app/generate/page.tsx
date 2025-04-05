@@ -10,6 +10,8 @@ const SandpackPreview = dynamic(
   { ssr: false }
 );
 
+console.log('DEFAULT_CURVEGRID');
+
 export default function SandpackDemoPage() {
   const chatInterfaceRef = useRef<any>(null);
   const [code, setCode] = useState('');
@@ -32,13 +34,13 @@ export default function SandpackDemoPage() {
       });
 
       const data = await response.json();
-      console.log('data', data);
 
       if (!response.ok) {
         throw new Error(data.error || 'Failed to generate code');
       }
 
       setCode(data.code);
+      console.log('AI CODEEEEEE', data.code);
 
       // Add assistant response to chat
       // We can add a simple confirmation message here
@@ -120,7 +122,7 @@ export default function SandpackDemoPage() {
             </button>
           </div>
         </div> */}
-        <div className='border-r border-muted'>
+        <div className='h-full flex border-r border-muted'>
           <ChatInterface
             ref={chatInterfaceRef}
             onSubmit={handleGenerateCode}
@@ -155,8 +157,8 @@ export default function SandpackDemoPage() {
         </div>
 
         <div className='flex-1 overflow-hidden'>
-          {/* <SandpackPreview files={SAMPLE_PROJECT} activePath='/app/page.tsx' /> */}
-          {/* <SandpackPreview activePath='/pages/index.tsx' /> */}
+          {/* {code ? <SandpackPreview files={code} activePath='/app/page.tsx' />} */}
+          {code && <SandpackPreview activePath='/app/page.tsx' />}
         </div>
       </div>
     </div>
