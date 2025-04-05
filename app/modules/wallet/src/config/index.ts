@@ -1,5 +1,3 @@
-//v3 iteration
-// AppKit with Base and Base Sepolia
 import { cookieStorage, createStorage } from 'wagmi';
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
 import { base, baseSepolia } from '@reown/appkit/networks';
