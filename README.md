@@ -3,11 +3,13 @@
 Vibe coding is here in web3. Make dapps in minutes. What if you could "one shot" prompt a dapp?
 The app that instantly creates web3 dApps with AI-powered prompts.
 
+<img width="1840" alt="vib3-2" src="https://github.com/user-attachments/assets/70d4b67d-6822-4748-b477-da2d5b864b69" />
+
 ## Problem / Challenge
 
 Vibe coding and AI Assitant tools are amazing... BUT... there is a limitation due to pretraining from LLM models.
 
-The latest documentaiton and best practices are not accessible to the LLM, even if we add @Docs to them via IDEs like Cursr
+The latest documentaiton and best practices are not accessible to the LLM, even if we add @Docs to them via IDEs like Cursor
 
 ## Solution
 
