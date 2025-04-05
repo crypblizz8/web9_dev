@@ -9,6 +9,7 @@ import {
   SandpackConsole,
 } from '@codesandbox/sandpack-react';
 import { web9Theme } from './web9Theme';
+import { DEFAULT_WALLET_FILES } from '../../modules/wallet/reference';
 
 // Sample Next.js project files
 const DEFAULT_NEXTJS_FILES = {
@@ -182,7 +183,8 @@ interface SandpackPreviewProps {
 }
 
 export default function SandpackPreview({
-  files = DEFAULT_NEXTJS_FILES,
+  // files = DEFAULT_NEXTJS_FILES,
+  files = DEFAULT_WALLET_FILES,
   activePath = '/app/page.tsx',
 }: SandpackPreviewProps) {
   return (
@@ -197,6 +199,25 @@ export default function SandpackPreview({
           classes: {
             'sp-layout': 'custom-layout',
             'sp-tabs': 'custom-tabs',
+          },
+        }}
+        customSetup={{
+          dependencies: {
+            '@reown/appkit': '^1.6.8',
+            '@reown/appkit-adapter-wagmi': '^1.6.8',
+            '@tailwindcss/postcss': '^4.1.3',
+            '@tanstack/react-query': '^5.71.10',
+            '@types/node': '^22.14.0',
+            '@types/react': '18.2.0',
+            '@types/react-dom': '18.2.0',
+            '@next/swc-wasm-nodejs': '12.1.6',
+            autoprefixer: '^10.4.21',
+            next: '12.1.6',
+            react: '18.2.0',
+            'react-dom': '18.2.0',
+            typescript: '^5.8.2',
+            viem: '^2.25.0',
+            wagmi: '^2.14.16',
           },
         }}
       >
