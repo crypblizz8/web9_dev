@@ -11,6 +11,7 @@ import {
 import { web9Theme } from './web9Theme';
 import { DEFAULT_WALLET_FILES } from '../../modules/wallet/reference_old';
 import { DEFAULT_VIEM_WALLET } from '@/app/modules/wallet/reference_viem';
+import { DEFAULT_CURVEGRID_VOTING } from '@/app/modules/voting-app/reference_curvegrid';
 
 const SandpackTabs = () => {
   const { sandpack } = useSandpack();
@@ -57,7 +58,8 @@ interface SandpackPreviewProps {
 }
 
 export default function SandpackPreview({
-  files = DEFAULT_VIEM_WALLET,
+  // files = DEFAULT_VIEM_WALLET,
+  files = DEFAULT_CURVEGRID_VOTING,
   // files: { files },
   activePath = '/app/page.tsx',
 }: SandpackPreviewProps) {
