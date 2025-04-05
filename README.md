@@ -14,7 +14,7 @@ What if you could "one shot" prompt a dapp?
 
 Vibe coding and AI Assitant tools are amazing... BUT... there is a limitation due to pretraining from LLM models.
 
-The latest documentaiton and best practices are not accessible to the LLM, even if we add @Docs to them via IDEs like Cursor
+The latest documentation and best practices are not accessible to the LLM, even if we add @Docs to them via IDEs like Cursor
 
 ## Solution
 
