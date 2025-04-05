@@ -211,10 +211,13 @@ const Home: NextPage = () => {
 export default Home;`,
   '/pages/_app.tsx': `import '../styles.css';
   import type { AppProps } from 'next/app';
-  
+  import ContextProvider from '../context';
+
   export default function App({ Component, pageProps }: AppProps) {
       return (
+            <ContextProvider cookies={null}>
               <Component {...pageProps} />
+            </ContextProvider>
       );
   }`,
   'tsconfig.json': `{
@@ -248,6 +251,95 @@ export default Home;`,
         "pages/index.js"
       ]
 }`,
+  'context/index.tsx': `
+import { wagmiAdapter, networks } from '../config';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createAppKit } from '@reown/appkit/react';
+import React, { type ReactNode } from 'react';
+import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi';
+
+const queryClient = new QueryClient();
+
+const metadata = {
+  name: 'next-reown-appkit',
+  description: 'next-reown-appkit',
+  url: 'https://github.com/0xonerb/next-reown-appkit-ssr',
+  icons: ['https://avatars.githubusercontent.com/u/179229932'],
+};
+
+export const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  projectId: "55f0a883b25ede7b5f3a96399168e93f",
+  networks,
+  metadata,
+  themeMode: 'light',
+  features: {
+    analytics: true,
+  },
+});
+
+function ContextProvider({
+  children,
+  cookies,
+}: {
+  children: ReactNode;
+  cookies: string | null;
+}) {
+  const initialState = cookieToInitialState(
+    wagmiAdapter.wagmiConfig as Config,
+    cookies
+  );
+  return (
+    <WagmiProvider
+      config={wagmiAdapter.wagmiConfig as Config}
+      initialState={initialState}
+    >
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </WagmiProvider>
+  );
+}
+
+export default ContextProvider;
+`,
+  'config/index.ts': `
+import { cookieStorage, createStorage } from 'wagmi';
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
+import { base, baseSepolia } from '@reown/appkit/networks';
+import type { AppKitNetwork } from '@reown/appkit/networks';
+
+// Environment variables
+export const projectId = "55f0a883b25ede7b5f3a96399168e93f";
+
+if (!projectId) {
+  throw new Error('Project ID is not defined');
+}
+
+// Define networks - just Base and Base Sepolia
+export const networks = [base, baseSepolia] as [
+  AppKitNetwork,
+  ...AppKitNetwork[]
+];
+
+// Select the appropriate network based on environment variables
+const selectedNetwork = process.env.NEXT_PUBLIC_CHAIN_ID
+  ? networks.find(
+      (network) => network.id === Number(process.env.NEXT_PUBLIC_CHAIN_ID)
+    )
+  : baseSepolia; // Default to base if not specified
+
+// Create the adapter with the appropriate networks
+export const wagmiAdapter = new WagmiAdapter({
+  storage: createStorage({
+    storage: cookieStorage,
+  }),
+  ssr: true,
+  projectId,
+  networks: [selectedNetwork] as [AppKitNetwork, ...AppKitNetwork[]],
+});
+
+export const config = wagmiAdapter.wagmiConfig;
+
+`,
 };
 
 // Unncessary Code / files

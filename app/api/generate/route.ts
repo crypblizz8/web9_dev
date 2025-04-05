@@ -44,6 +44,7 @@ export async function POST(request: Request) {
                     6. Allow wallet disconnection
                     7. Be compatible with Next.js 12.1.6 and React 18.2.0
                     8. Use Tailwind CSS for styling
+                    IMPORTANT: Ensure format follows 'FOLDER/FILENAME': CODE... and comma separted. like the object example. IMPORTANT
                     IMPORTANT: Your entire response must be ONLY the code - no introduction, no explanation, just the code itself.`,
             },
           ],

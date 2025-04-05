@@ -9,7 +9,6 @@ import {
   SandpackConsole,
 } from '@codesandbox/sandpack-react';
 import { web9Theme } from './web9Theme';
-import { DEFAULT_WALLET_FILES } from '../../modules/wallet/reference_old';
 import { DEFAULT_VIEM_WALLET } from '@/app/modules/wallet/reference_viem';
 import { DEFAULT_CURVEGRID_VOTING } from '@/app/modules/voting-app/reference_curvegrid';
 
@@ -60,9 +59,20 @@ interface SandpackPreviewProps {
 export default function SandpackPreview({
   // files = DEFAULT_VIEM_WALLET,
   files = DEFAULT_CURVEGRID_VOTING,
-  // files: { files },
+  // files,
   activePath = '/app/page.tsx',
 }: SandpackPreviewProps) {
+  // console.log('------');
+  // console.log('------');
+  // console.log('------');
+  // console.log('sandPack DATA AI', JSON.stringify(files));
+  // console.log('------');
+  // console.log('------');
+  // console.log('------');
+  // console.log('sandPack DATA FILES', DEFAULT_VIEM_WALLET);
+
+  // return;
+
   return (
     <div className='h-full'>
       <SandpackProvider
