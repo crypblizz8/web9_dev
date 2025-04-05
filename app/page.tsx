@@ -2,9 +2,17 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+<<<<<<< HEAD
 import { useRouter } from 'next/navigation';
 import { DEFAULT_CURVEGRID_VOTING } from './modules/voting-app/reference_curvegrid';
 import { DEFAULT_VIEM_WALLET } from './modules/wallet/reference_viem';
+=======
+import {
+  useRouter,
+  useSearchParams,
+  createSearchParams,
+} from 'next/navigation';
+>>>>>>> fix/prompting
 
 export default function Page() {
   const router = useRouter();
@@ -88,16 +96,15 @@ export default function Page() {
   };
 
   const handleSubmit = () => {
-    // Save the current prompt to localStorage before navigating
+    // Get the final prompt
     const finalPrompt = prompt || getExampleText();
-    localStorage.setItem('savedPrompt', finalPrompt);
-
-    // Reset the processed flag to allow processing on the next page
-    localStorage.removeItem('promptProcessed');
 
     console.log('Submitting prompt:', finalPrompt);
 
-    // Navigate to the next page
+    // Store the prompt in sessionStorage before navigation
+    sessionStorage.setItem('initialPrompt', finalPrompt);
+
+    // Navigate to generate page
     router.push('/generate');
   };
 

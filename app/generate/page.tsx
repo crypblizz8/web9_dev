@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import ChatInterface from '../components/ChatInterface';
 
@@ -62,6 +62,28 @@ export default function SandpackDemoPage() {
       setIsLoading(false);
     }
   };
+
+  // Load prompt from sessionStorage when component mounts
+  useEffect(() => {
+    const initialPrompt = sessionStorage.getItem('initialPrompt');
+
+    if (initialPrompt && chatInterfaceRef.current) {
+      // Remove the prompt from sessionStorage to prevent it from being used again
+      sessionStorage.removeItem('initialPrompt');
+
+      // Add user message with the prompt
+      chatInterfaceRef.current.addUserMessage({
+        id: Date.now().toString(),
+        role: 'user',
+        content: initialPrompt,
+      });
+
+      // Wait a bit then handle code generation
+      setTimeout(() => {
+        handleGenerateCode(initialPrompt);
+      }, 500);
+    }
+  }, []);
 
   return (
     <div className='flex h-screen bg-[#1e1e1e] text-white'>
