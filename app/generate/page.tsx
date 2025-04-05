@@ -62,33 +62,26 @@ export default function SandpackDemoPage() {
     }
   };
 
-  // Load saved prompt from localStorage when component mounts
+  // Load prompt from sessionStorage when component mounts
   useEffect(() => {
-    const savedPrompt = localStorage.getItem('savedPrompt');
-    const isProcessed = localStorage.getItem('promptProcessed');
+    const initialPrompt = sessionStorage.getItem('initialPrompt');
 
-    if (savedPrompt && chatInterfaceRef.current && isProcessed !== 'true') {
-      // Mark as processed to prevent duplicates
-      localStorage.setItem('promptProcessed', 'true');
+    if (initialPrompt && chatInterfaceRef.current) {
+      // Remove the prompt from sessionStorage to prevent it from being used again
+      sessionStorage.removeItem('initialPrompt');
 
-      // Add just one user message with the prompt
+      // Add user message with the prompt
       chatInterfaceRef.current.addUserMessage({
         id: Date.now().toString(),
         role: 'user',
-        content: savedPrompt,
+        content: initialPrompt,
       });
 
-      // Wait a bit then handle code generation directly
+      // Wait a bit then handle code generation
       setTimeout(() => {
-        handleGenerateCode(savedPrompt);
+        handleGenerateCode(initialPrompt);
       }, 500);
     }
-
-    // Cleanup function - reset the processed flag when unmounting
-    return () => {
-      localStorage.removeItem('promptProcessed');
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

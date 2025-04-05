@@ -2,7 +2,11 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import {
+  useRouter,
+  useSearchParams,
+  createSearchParams,
+} from 'next/navigation';
 
 export default function Page() {
   const router = useRouter();
@@ -86,16 +90,15 @@ export default function Page() {
   };
 
   const handleSubmit = () => {
-    // Save the current prompt to localStorage before navigating
+    // Get the final prompt
     const finalPrompt = prompt || getExampleText();
-    localStorage.setItem('savedPrompt', finalPrompt);
-
-    // Reset the processed flag to allow processing on the next page
-    localStorage.removeItem('promptProcessed');
 
     console.log('Submitting prompt:', finalPrompt);
 
-    // Navigate to the next page
+    // Store the prompt in sessionStorage before navigation
+    sessionStorage.setItem('initialPrompt', finalPrompt);
+
+    // Navigate to generate page
     router.push('/generate');
   };
 
