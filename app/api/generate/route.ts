@@ -1,3 +1,4 @@
+import { DEFAULT_VIEM_WALLET } from '@/app/modules/wallet/reference_viem';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -30,18 +31,23 @@ export async function POST(request: Request) {
             {
               role: 'system',
               content:
-                "You are a skilled web developer. Generate clean, modern, responsive code based on the user's description.",
+                'You are an expert web3 developer specializing in Next.js 12.1.6, React 18.2.0, and Tailwind CSS. Create production-ready, maintainable code following industry best practices.',
             },
             {
               role: 'user',
-              content: `Generate HTML, CSS, and JavaScript code for: ${prompt}.
-                     Use semantic HTML5, modern CSS, and simple JavaScript.
-                     Include comments explaining key sections.
-                     Format the code as a single HTML file with internal CSS and JavaScript.
-                     Make sure the design is clean, modern, and responsive.
-                     Return ONLY the complete HTML file without any explanations or markdown.`,
+              content: `ONLY CODE OUTPUT You must follow the exact format / output of ${DEFAULT_VIEM_WALLET} with tailwind styling. :
+                    1. Use viem for wallet interaction
+                    2. Handle wallet connection states properly
+                    3. Implement proper error handling
+                    4. Use TypeScript with appropriate interfaces
+                    5. Support wallet connection events
+                    6. Allow wallet disconnection
+                    7. Be compatible with Next.js 12.1.6 and React 18.2.0
+                    8. Use Tailwind CSS for styling
+                    IMPORTANT: Your entire response must be ONLY the code - no introduction, no explanation, just the code itself.`,
             },
           ],
+
           // messages: [
           //   {
           //     role: 'system',

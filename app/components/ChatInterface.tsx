@@ -11,6 +11,7 @@ interface ChatInterfaceProps {
   isLoading: boolean;
 }
 
+// Add display name to fix lint error
 const ChatInterface = forwardRef<
   { addAssistantMessage: (content: string) => void },
   ChatInterfaceProps
@@ -137,5 +138,8 @@ const ChatInterface = forwardRef<
     </div>
   );
 });
+
+// Add display name
+ChatInterface.displayName = 'ChatInterface';
 
 export default ChatInterface;
